@@ -1,21 +1,4 @@
-class Calculator {
-    // 1. Overload: Two integers
-    public int add(int a, int b) {
-        return a + b;
-    }
-
-    // 2. Overload: Three integers
-    public int add(int a, int b, int c) {
-        return a + b + c;
-    }
-
-    // 3. Overload: Two doubles
-    public double add(double a, double b) {
-        return a + b;
-    }
-}
-
-public class MainP3 {
+public class CalculatorTesting {
     public static void main(String[] args) {
         Calculator calc = new Calculator();
 
