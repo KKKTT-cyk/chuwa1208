@@ -2,14 +2,37 @@
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     public static void main(String[] args) {
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!");
+        //p1
+        BankAccount acc = new BankAccount("123",22);
+        double bal = acc.getBalance();
+        System.out.println(bal);
 
-        for (int i = 1; i <= 5; i++) {
-            //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-            // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-            System.out.println("i = " + i);
-        }
+        //p2
+        Car car = new Car();
+        car.setSpeed(123);
+        car.displayInfo();
+
+        //p3
+        int sum = Calculator.add(2,3);
+        System.out.println(sum);
+        int sum2 = Calculator.add(2,3,5);
+        System.out.println(sum2);
+        double sum3 = Calculator.add(1.2,2.2);
+        System.out.println(sum3);
+
+        //p4
+        Shape[] shapes = new Shape[2];
+        shapes[0] = new Rectangle(23,3);
+        shapes[1] = new Circle(3);
+        System.out.println("Area of rectangle:"+shapes[0].getArea());
+        System.out.println("Area of circle:"+shapes[1].getArea());
+
+        //p5
+        Employee em1 = new Employee();
+        System.out.println("name of em1: "+ em1.getName());
+        Employee em2 = new Employee("Jack","123",3344);
+        System.out.println("name of em2: "+ em2.getName());
+        Employee em3 = new Employee("Alice","456");
+        System.out.println("name of em3: "+ em3.getName());
     }
 }
