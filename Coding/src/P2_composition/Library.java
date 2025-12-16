@@ -10,6 +10,7 @@ public class Library {
         this.books = new ArrayList<>();
     }
 
+    // Aggregation?
     public void addBook(Book book) {
         this.books.add(book);
     }
