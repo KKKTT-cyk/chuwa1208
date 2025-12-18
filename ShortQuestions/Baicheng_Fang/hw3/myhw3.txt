@@ -1,0 +1,38 @@
+1. An abstract class is a class that can only be extended not initiated. The concept of OOP is realized by abstract class and interface.
+
+2.Constructor, static, abstract, protected, public, private. 
+No. An abstract class can still have what a normal Java class has.
+
+3.Methods are by default public and variables are public static final.
+Because an interface cannot be initiated.
+
+4.No. Yes
+class Multi extends ParentClass implements InterfaceA, InterfaceB {
+
+}
+
+5.Yes and Yes.
+interface A extends B, C {
+
+}
+
+6.(1) Abstract class is designed for shared behaviors/fields across all subclasses.
+Interface is used when a set of behaviors that all subclasses must support. (Do not care about implementation)
+
+(2) Abstract class does not support multiple inheritance while interface does.
+
+(3) Abstract class can have constructor while interface cannot. Abstract class's member variables can be what a normal Java class has while interface's are public static final.
+
+7.Multiple inheritance of classes can cause diamond problems. While in interfaces this can be resolved by coding.
+
+8.Aggregation is Has-a relationship. Owner obj does not have the entire lifecycle of the owned obj. For example a person obj has a contry variable which is a reference. The country obj still exists even after person obj's lifecycle.
+
+Composition is Part-of relationship. The lifetime of the owned obj depends on the lifetime of the owner obj. For example a car obj has engine, wheels variables. Those variables cannot exist alone and is not shared. When lifecycle of car obj is terminatred the engine and wheels are ended as well.
+
+9. Composition is better for extensibility, maintaninability and decouple. Inheritances would make the system go deeper and deeper through extends.
+
+10.(1) Only one instance can be initiated.
+(2) Provide public global access.
+(3) Controlled creation.
+
+Java programming provides lazy load since inner cflass is not loaded until it is referenced. Because class loading and initalization are thread-safe in Java so getInstance() would only create one Singleton instance. And the Singleton instance is final thus immutable.
