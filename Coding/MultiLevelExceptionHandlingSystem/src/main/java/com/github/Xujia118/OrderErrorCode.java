@@ -1,0 +1,24 @@
+package com.github.Xujia118;
+
+public enum OrderErrorCode implements IErrorCode {
+    ORDER_NOT_FOUND(1001, "Order not found"),
+    ORDER_CANCELLED(1002, "Order already cancelled"),
+    INSUFFICIENT_STOCK(1003, "Insufficient stock");
+
+    private final long code;
+    private final String message;
+
+    OrderErrorCode(long code, String message) {
+        this.code = code;
+        this.message = message;
+    }
+
+    public long getCode() {
+        return code;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+}
