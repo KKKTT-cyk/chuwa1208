@@ -56,9 +56,55 @@
 * Extending `Exception` (Checked):
 * Criteria: Use when you want to force the caller to explicitly handle the exception logic.
 * Example: `OrderNotFoundException` (Class slide example explicitly extends Exception).
+```
+  // Extends 'Exception' -> Checked Exception
+  public class OrderNotFoundException extends Exception {
+
+    // Constructor accepts an error message
+    public OrderNotFoundException(String errorMessage) {
+        super(errorMessage);
+    }
+  }
+```
+```
+// The compiler FORCES the caller to handle this exception
+public void findOrder(String id) throws OrderNotFoundException {
+    if (id == null) {
+        throw new OrderNotFoundException("Order ID " + id + " not found.");
+    }
+}
+```
+
 * Extending `RuntimeException` (Unchecked):
 * Criteria: Use for system errors, configuration issues, or logic bugs where the caller likely cannot recover.
-* Example: `CharlesException` or `ApiException` (Class slide examples explicitly extend `RuntimeException`).
+* Example: `ApiException` (Class slide examples explicitly extend `RuntimeException`).
+```
+  // Extends 'RuntimeException' -> Unchecked Exception
+  public class ApiException extends RuntimeException {
+
+  private IErrorCode errorCode; // Optional: uses the interface pattern
+
+  public ApiException(String message) {
+  super(message);
+  }
+
+  public ApiException(Throwable cause) {
+  super(cause);
+  }
+  }
+ ```
+
+```
+// The compiler does NOT force the caller to catch this
+public void connectToService() {
+    boolean serverDown = true;
+    if (serverDown) {
+        // Crashes the specific operation, but no try-catch block is required
+        throw new ApiException("Service unavailable");
+    }
+}
+
+```
 
 ---
 
