@@ -37,12 +37,24 @@ R apply(T t)
 A transformation from one type to another: T → R
 Mapping objects, converting types, extracting fields.
 
-
 Q5. What is "effectively final"? Why does Java require variables used in lambda expressions to be final or
 effectively final? What happens if you try to modify a variable before or after it's used in a lambda?
+A local variable is effectively final if: You assign it once, and you never reassign it after that.
+Requiring final/effectively final guarantees the captured value is stable and avoids weird “half-mutable” semantics.
+If you reassign before the lambda is created, that’s fine—as long as after the final assignment you don’t reassign again
+Java rejects it at compile time because the variable is not effectively final.
+Mutating the referenced object is allowed (though you should consider thread-safety).
+
 Q6. Explain the difference between the three types of method references: (1)
 ClassName::staticMethod, (2) object::instanceMethod, and (3)
 ClassName::instanceMethod. For type 3, explain why the first parameter becomes the calling object.
+(1) Call this static method on the class.
+(2) Call this instance method on this particular object.
+(3) Call this instance method on the first argument.
+The first parameter of the functional interface becomes the receiver object (this),
+and the remaining parameters are passed to the method.
+
+
 Q7. What is the difference between Optional.of() and Optional.ofNullable()? When should you
 use each one? What happens if you pass null to Optional.of()?
 Q8. Compare orElse() and orElseGet() methods in Optional. Which one is more efficient when the
