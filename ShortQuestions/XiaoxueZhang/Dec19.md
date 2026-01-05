@@ -55,9 +55,22 @@ The first parameter of the functional interface becomes the receiver object (thi
 and the remaining parameters are passed to the method.
 
 
-Q7. What is the difference between Optional.of() and Optional.ofNullable()? When should you
-use each one? What happens if you pass null to Optional.of()?
+Q7. What is the difference between Optional.of() and Optional.ofNullable()? When should you use each one? What happens if you pass null to Optional.of()?
+If value is null, Optional.of() throws NullPointerException immediately.
+If value is null Optional.ofNullable() get Optional.empty() (no exception).
+Use Optional.of(...) when: Null would indicate a bug / invalid state You want a clear, immediate failure (fail-fast)
+Use Optional.ofNullable(...) when: You’re wrapping a value that comes from a place where null is possible (DB, map lookup, external API, legacy code). You want to convert null → empty cleanly
+
 Q8. Compare orElse() and orElseGet() methods in Optional. Which one is more efficient when the
 default value is expensive to compute? Explain with an example.
+orElse(): The defaultValue is evaluated immediately, even if the Optional is present. So it can waste work if the default is expensive.
+orElseGet(): The supplier is called lazily: only if the Optional is empty. This avoids unnecessary computation.
+orElseGet() is more efficient when the default is expensive to compute, because it computes it only when needed.
+
 Q9. Why is Optional.get() considered dangerous? What are the recommended alternatives? Explain the
 best practices for extracting values from Optional objects.
+Optional.get() is considered dangerous because it throws an exception if the Optional is empty.
+Need a default → orElse / orElseGet
+Missing is an error → orElseThrow
+Side effect only → ifPresent / ifPresentOrElse
+Transform/chaining → map / flatMap
