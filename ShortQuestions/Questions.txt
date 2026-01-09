@@ -1,0 +1,111 @@
+Q: How to create a new thread(Please also consider Thread Pool approach)?
+1. Simple Thread
+Thread td = new Thread(() -> {});
+td.start();
+
+2. Using Thread Pool ExecutorService
+ExecutorService executor = executor.newFixedThreadPool(10);
+executor.submit(() -> {});
+executor.shutdown();
+
+Q: Difference between Runnable and Callable?
+Runnable: A task returns no result. Cannot throw checked exceptions. Used with Thread or ExecutorService.submit(Runnable)
+Callable: A task returns a result of type V. Can throw checked exceptions. Used with ExecutorService.submit(Callable<V>) and return a Future<V>
+
+Q: What is the difference between t.start() and t.run()?
+t.start(): starts a new thread and calls the run() method asynchronously.
+t.run(): calls the run() method, no new thread is created.
+
+Q: Which way of creating threads is better: Thread class or Runnable interface?
+Using Runnable interface is better. Easier on tasks management and flexible to extend other class.
+
+Q: What are the thread statuses?
+NEW -> RUNNABLE -> BLOCKED -> WAITING -> TIMED_WAITING -> TERMINATED
+
+
+Q: Demonstrate deadlock and how to resolve it in Java code.
+DDL: Two threads are trying to lock two resources in opposite order. Thread 1 locks resource 1 waits for resource 2 while thread 2 locks resource 2 and waits for resouce 1.
+Solution: Always acquire lock in the same order.
+
+Q: How do threads communicate each other?
+By sharing memory using methods such as wait(), notify(), notifyAll() on shared objects.
+
+
+Q: What’s the difference between class lock and object lock?
+Object Lock: locks an instance of a class.
+Class Lock: locks the class object itself.
+
+
+
+Q: What is join() method?
+It makes the current thread wait until the target thread completes.
+
+Q: what is yield() method
+It pause the current thread.
+
+Q: What is ThreadPool? How many types of ThreadPool? What is the TaskQueue in ThreadPool?
+A ThreadPool is a collection of pre-created reusable threads.
+There are:
+1. newFixedThreadPool(int n)
+2. newCachedThreadPool()
+3. newSingleThreadExecutor()
+4. newScheduledThreadPool(int n)
+
+A TaskQueue is where submitted tasks wait when all threads in the pool are busy, it stores Runnable or Callable tasks until a thread becomes available.
+
+
+Q: Which Library is used to create ThreadPool? Which Interface provide main functions of thread-pool?
+java.util.concurrent package -> Executors and ThreadPoolExecutor class.
+ExecutorService
+
+Q: How to submit a task to ThreadPool?
+We can use ExecutorService to submit tasks:
+ExecutorService executor = Executors.newFixedThreadPool(4);
+executor.execute(() -> System.out.println("Hello")); // Runnable no result
+Future<Integer> future = executor.submit(() -> 42); // Callable return result
+
+Q: What is the advantage of ThreadPool?
+1. Avoid frequent thread creation. 2. Limit the number of active threads. 3. Support queuing, scheduling, cancellation
+
+Q: Difference between shutdown() and shutdownNow() methods of executor
+shutdown(): Stops accepting new tasks, lets submitted tasks finish
+shutdownNow(): Attempts to stop all tasks immedeiatly, interrupts running threads, returns pending tasks.
+
+
+Q: What is Atomic classes? 
+Atomic classes allow multiple threads to update shared data without synchronized or locks.
+It ensures the operations on single variables at the hardware level
+
+Q: How many types of Atomic classes? Give me some code example of Atomic classes and its main methods. 
+Q: when to use it?
+1. Automic primitives. 2. Atomoic reference. 3. Atomic array. 4. Atomic field updaters.
+Example:
+AtomicInteger counter = new AtomicInteger(0);
+counter.incrementAndGet(); // operations
+counter.addAndGet(100);
+
+
+Q: What is the concurrent collections? Can you list some concurrent data structure (Thread-safe)
+Thread-saft data strutcures in java.util.concurrent package.
+ConcurrentHashMap
+ConcurrentLinkedQueue
+ConcurrentSkipListSet
+
+Q: What kind of locks do you know? What is the advantage of each lock?
+1. Synchronized(obj) {}; // Simple, safe
+2. Lock lock = new ReentrantLock(); // Timeout support
+3. ReadWriteLock lock = new ReentrantReadWriteLock(); // High read concurrency
+4. StampedLock lock = new StampedLock(); // High throughput
+
+
+Q: What is future and completableFuture? List some main methods of CompleteableFuture.
+Future: the result of an asynchronous computation, return when a task is submitted to an ExecutorService;
+CompletableFuture: New in Java 8, support asynchronous programming, allows chaining, combining, and callback-style execution
+
+Some methods:
+supplyAsync(Supplier<T>)
+runAsync(Runnable)
+allOf()
+anyOf()
+complete()
+join()
