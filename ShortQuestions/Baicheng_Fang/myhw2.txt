@@ -1,0 +1,19 @@
+1. Class is the blueprint like a car design and object is the real thing created from that blueprint like a car read to rev.
+
+2. Compiler wont create a default no-params constructor. You have to explicitly create one.
+
+3.Privite, Default, Protected, Public
+
+4.Method overloading is methods with same name but different params number or type.
+Method overriding is subclass implement parent's method in a different way.
+
+5.No. Final is immutable and priviate is visible only to parent class.
+
+6.Static polymorphism is method overlaoding within the same class and happens during compile time that checks reference type, mainly for readability.
+Dynamic polymorphism is method overriding, the core of OOP, happens in inheritance during runtime that checks object type.
+
+7.Parents classes may have multiple method with same name and when diamond inherited subclass is confused. 
+Use interface instead.
+
+8.At compile time, static polymorphism, lst is reference to List;
+At runtime, dynamic polymorphism, lst is of object type ArratList.
