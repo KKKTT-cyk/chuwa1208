@@ -1,0 +1,93 @@
+Q1. What are the three major categories of exceptions in Java's exception hierarchy? 
+Checked, Unchecked, Error
+For each category, explain: 
+(1) Whether it must be handled at compile-time, (2) Common examples, (3) Best practices for handling.
+A: Checked Exceptions must be handled at compile-time, usually it is IOException, SQLException, FileNotFoundException, ClassNotFoundException.
+We can use try catch to handle.
+Unchecked Exception will be at runtime. It can be NullPointerException, ArrayIndexOutOfBoundsException.
+We can validate inputs and check nulls to prevent it.
+Error is compile-time. It can be OutOfMemoryError, StackOverflowErrow.
+The best practice for handling: 1. Log out the error. 2. Stop the program.
+
+
+Q2. Explain the execution order of try-catch-finally blocks. 
+A: Execute try block, if there is an error, execute catch block. And always execute finally block.
+If both the catch block and finally block contain return statements, which value will be returned? 
+A: Value from finally block will be returned.
+Why is it strongly discouraged to use return statements in finally blocks?
+A: Because it will override the previous block's return.
+
+
+Q3. What is the "catch scope should be from small to large" rule? 
+A: Catch specific exception to general exception.
+Why must specific exception types (like OrderNotFoundException) be caught before general ones (like Exception)? 
+A: Because the catch block execute one by one.
+What happens if you violate this rule?
+A: The error might be caught earlier.
+
+
+
+Q4. Compare throw and throws: 
+(1) Where is each used in code? 
+A: throw: inside of a method or block.  throws: in a method signature.
+(2) What follows each keyword? 
+A: throw follows an exception object, throws follows one or more exception classes.
+(3) Provide one practical example demonstrating both keywords working together in a DAO-Service-Controller architecture.
+For example: throw new OrderNotFoundException("Order not found"); public Order getOrder(int id) throws OrderNotFoundException, SQLException
+
+
+Q5. What is try-with-resources syntax (introduced in Java 7)? 
+A: It can automatically close resources when try block finished.
+What interface must a class implement to be used with try-with-resources? 
+A: java.lang.AutoCloseable
+Explain the execution order when multiple resources are declared.
+A: Resources are closed in reverse order of creation. For example 
+try (
+    ResourceA a = new ResourceA();
+    ResourceB b = new ResourceB();
+)
+b will be closed first, then a will be closed.
+
+
+
+Q6. When creating custom exceptions, how do you decide between extending Exception vs extending RuntimeException? 
+Provide criteria for each choice and one example scenario for each.
+A: Choose extends Exception mostly when IO, network, data fetching.
+Choose extends RuntimeException when it might has bugs in the program logic.
+
+
+Q7. Explain the two important features of Enum: "Every element is in values" and "Every element is a constructor". 
+A: Every enum constant is stored in an array returned by the values() method. Each enum constant is an instance of the enum class.
+How would you implement an Enum with a private constructor that accepts parameters?
+A: enum ExampleEnum {
+    A("hello"),
+    B("HEllo"),
+    C("HELLO");
+    private final String words;
+    ExampleEnum(String words) {
+        this.words = words;
+    }
+}
+
+
+
+Q8. Describe the popular Enum template pattern (Interface + Enum + Exception). 
+What are its four components? 
+A: Interface, Enum, Exception, Usage
+How does using an interface type (IErrorCode) allow the exception class to accept multiple different enum types?
+A: Let enum to implement Interface, and then let them be referenced by the interface type at runtime.
+
+
+Q9. Compare the three major Collection interfaces: List, Set, and Queue. For each, explain: 
+(1) Ordering characteristics, (2) Duplicate element handling, (3) Most commonly used implementation class, (4) One typical use case.
+List: Ordered. Allow duplicates. ArrayList or LinkedList. Some order matters and duplicates matter.
+Set: Both. Not allow duplicates. HashSet - unordered, LinkedHashSet - insertion ordered, TreeSet - sorted order. Id, email that something must be unique.
+Queue: Ordered. Allow duplicates. PriorityQueue. Something need to be handled in a specific order.
+
+
+Q10. Explain the difference between HashMap and Hashtable. 
+A: HashMap is faster, but not thread safety. it allows Null keys and values but Hashtable not.
+Why is Hashtable considered obsolete? 
+A: Not practical in multi-thread tasks.
+What are the modern alternatives for thread-safe Map implementations?
+A: ConcurrentHashMap
