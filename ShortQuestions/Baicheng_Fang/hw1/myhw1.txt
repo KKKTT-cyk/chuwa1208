@@ -1,0 +1,36 @@
+1.JDK is Java Development Kit which includes JRE and other development tools such as compiler and interpreter.
+JRE is runtime environment which includes JVM and libs like archiver and other files.
+JVM is java virtual machine that bridges java app and machine os which makes jave developers write once and run anywhere. Though names java virtual machine, JVM is actually a multi-language running env that also supports other languages like kotlin and makes it safe to convert to java.
+
+2.Primitive types can not be overrided so normaly we just use "==" to compare.
+byte, short, int, long, float ,double, boolean and char are primitive type. When capitalized it is the corresponding wrapper class (not String though).
+Primitive types reside on stack instead of heap. We store the real value instead of reference to an address
+
+3.Pass-by-Value
+For primitive types, it is straight forward we just pass the value;
+For reference types, still pass by value, but that value is an address.
+
+4.Strings are stored in string constant pool. The immutability makes it thread safe so we do not need lock to modify any value thus better performance.
+
+5.When defining a string, e.g. String a = "Cat"; it is stored in string constant pool. Later when defining strings with same value, e.g. String b = "Cat"; it looks up in string constant pool first and find the existing value, just pointing String b to that value. So a == b.
+However if you new a string from String c = new String("Cat"); it is stored in somewhere else in the heap other than string constant pool, thus a != c
+
+6.The purpose of Final keyword is defensive in business logic to make the code immutable. For variable, final makes it constant; For method, final prevents overriding; For class, final prevents inheritance.
+
+7.Static keyword makes varuabke belongs to class not any specefic object to save memory for safe and performance. 
+Static code block only runs once during initialization.
+For static inner class, it does not require any outter class to create and has no reference to outter class.
+
+8.Static code block only runs once during initialization.
+
+9.No. static method belongs to class so when running there may be no object instance.
+
+10.Static sources must be loaded first then can be initialized. So static variables, then static block and finally constructor.
+
+11.A static variable is mutable while public static final is immutable.
+
+12.Immutable objects' values never change so there is no race condition like read-write and write-write. Since it is immutable so we do not need to sync and use locks thus better performance.
+For example we have a distributed KV store. Server1 reads value t1 and server2 reads value at t2. Then server1 makes an append like operation on String at t3. Then server2 makes another append at t4 based on the value it read at t2 which is stale so the final value in KV store is not desired.
+
+13.No subclass allowed thus all its fields and method remains the same since no overriding nor inheritance.
+
