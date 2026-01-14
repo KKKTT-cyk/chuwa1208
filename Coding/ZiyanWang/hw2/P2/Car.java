@@ -1,0 +1,17 @@
+public class Car extends Vehicle {
+    private int numDoors;
+    public Car(String brand, int speed, int numDoors) {
+        super(brand, speed)
+        this.numDoors = numDoors;
+    }
+
+    @Override
+    public void displayInfo() {
+        System.out.println(
+                "Car - Brand: " + brand +
+                        ", Speed: " + speed +
+                        ", Doors: " + numDoors
+        );
+    }
+
+}
