@@ -1,0 +1,65 @@
+Q1. What is an abstract class? 
+A: Abstract class is a class that cannot be implemented on its own. It needs to be extended by other classes.
+Q1.1 Why cannot an abstract class be instantiated directly? 
+A: Because it contain abstract methods that have not yet be implemented.
+Q1.2 Can an abstract class have a constructor? If yes, what access modifier is typically used for it?
+A: Yes and protected.
+
+
+Q2. What types of methods and member variables can an abstract class contain? List at least 4 types. 
+A: abstract, final, static, and default.
+Q2.1 Is it correct to say "an abstract class can only contain abstract methods"? Explain.
+A: No, it can contain concrete methods as well.
+
+
+Q3. What are the default modifiers for methods and variables in an interface? Why can't an interface have a constructor?
+A: It is public abstract by default. It cannot have constructor because interface is used to be extended, it is not an object.
+
+
+Q4. Can a class extend multiple classes in Java? Can a class implement multiple interfaces? Explain the syntax for each case.
+A: No, a class can only extend one class. But class can implement multiple interfaces.
+For example: class Car implements FWD, RWD, AWD {}
+
+
+Q5. Explain the relationship between interfaces: can an interface extend another interface? If yes, what keyword is used? 
+A: Yes, it inherit another interface, For example: interface HR extends Person {}
+Q5.1 Can an interface extend multiple interfaces?
+A: Yes, for example class Car implements FWD, RWD, AWD {}
+
+
+Q6. Compare abstract classes and interfaces from the following three perspectives: 
+(1) Design intent (what it represents), (2) Multiple inheritance support, (3) Constructors and member variables.
+A: 
+1. Abstract class represents a blueprint with bunch of members and methods. Interface represents a contract, attribute.
+2. Abstract class cannot extend multiple parents, interface can.
+3. Abstract class can have constructors, interface cannot.
+
+
+Q7. Why does Java not allow multiple inheritance of classes but allows multiple implementation of interfaces? 
+How does this design avoid the Diamond Problem?
+A: For example, if class A extends B, C {}, the compiler cannot understand if it should call B.example() or C.example()
+
+
+Q8. Explain the difference between Aggregation and Composition. 
+Focus on the difference in object lifetime management and provide one practical example for each.
+A: Aggregation and Composition are two forms of "has-a" relationshipt in OOD.
+Aggregation is weak ownershipt, it can contain object that can exist independently of the container.
+For example, we have a class Library and a class Book. In main, we instantiate a bunch of Books, and a library can contain those bunch of Books.
+In this case, when the Library get destroied, the class Book still exist.
+
+Composition is strong ownership and contain object's lifetime depends on the container.
+For example, we have a class Library and a class Book as well this time. But we new the class Book inside of the Library class, and only instantiate Library class in main.
+In this case, when the Library get destroied, the Book get destroied as well.
+
+
+Q9. In design patterns and SOLID principles, there is an important principle: "Favor composition over inheritance."
+Explain why composition is generally more flexible than inheritance.
+A: Inheritance is static, and composition is dynamic.
+
+
+Q10. Describe the three core characteristics of the Singleton design pattern. 
+A: 1. Only exist one object of the class in runtime. 2. Can be access in global. 3. Controlled instantiate.
+Q10.1 Why is the Static Inner Class implementation of Singleton thread-safe and efficient? 
+A: Because in Singleton design pattern, class only be loaded once.
+How does this approach achieve lazy initialization?
+A: Because the Singleton instance is created only when it is first requested.
