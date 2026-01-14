@@ -1,0 +1,137 @@
+Q1. What is the primary reason Java 8 introduced default methods in interfaces? Explain how default
+methods help maintain backward compatibility when adding new methods to existing interfaces. Give an
+example of a JDK interface that uses default methods.
+A: It allows interfaces to evolve without breaking existing implementations. Before Java 8, adding
+a new method to an interface would force all implementing classes to implement that method.
+For example before Java 8, I have an interface:
+interface Engine {
+    void name();
+}
+if I add void color(); to interface Engine, all exisiting class that implement Engine would break.
+So Java 8 introduced default method like:
+interface Engine {
+    default void name();
+    default void color();
+}
+So that the exsiting classes can still compile without adding the new methods to all the classes.
+
+Q2. Compare default methods and static methods in interfaces. What are the key differences in 
+(1) how they are called, (2) whether they can be overridden, and (3) their typical use cases?
+A: 1. default methods will be called on an instance of a class. static methods will be called on the interface itself.
+2. default methods can be overridden while static methods cannot.
+3. When adding a new behavior to the interface, most of the cases we can use default method. If the method
+is a helper or util algorithm, we can use static method.
+
+Q3. What is a Functional Interface? What role does the 
+@FunctionalInterface annotation play? Can a functional interface have multiple default methods? 
+Explain with an example. 
+A: Functional interface has exactly one abstract method.
+This interface can be used as the lambda expressions method references.
+For example:
+@FunctionalInterface
+interface GeneralAdd {
+    int add(int a, int b);
+}
+GeneralAdd ga = (a, b) -> a + b;
+The annotation of @FunctionalInterface can help the program to check if the interface has exactly one abstract method during
+the compile-time. However, it can have multiple default methods.
+For example:
+@FunctionalInterface
+interface GeneralAdd {
+    int add(int a, int b); // abstract method
+    default int multiple(int a, int b) {
+        return a * b;
+    }
+    default int minus(int a, int b) {
+        return a - b;
+    }
+}
+GeneralAdd ga = (a, b) -> a + b;
+int test = ga.multiple(3, 4); // test == 12
+int test2 = ga.minus(3, 4); // test2 == -1
+
+
+
+Q4. Describe the four major categories of functional interfaces in 
+java.util.function package. 
+For each category (Consumer, Supplier, Predicate, Function), explain (1) its method signature, (2) what it
+represents, and (3) give one practical use case.
+A: 1. Consumer:
+void accept(T t);
+It consumes an input, performs an action, return void.
+We can use it for print out
+For example:
+Consumer<String> log = s -> System.out.println(s);
+log.accept("Test"); // This will print Test
+2. Supplier:
+T get();
+It produces a value, takes no input, return a value.
+We can use this as a util function:
+Supplier<Double> random = () -> Math.random();
+System.out.println(random.get()); // Will print a random number
+3. Predicate:
+boolean test(T t);
+This evalutaes a condition, return true or false;
+We can use this in condition check:
+Predicate<Integer> isEven = n -> n % 2 == 0;
+isEven.test(10); // true;
+4. Function:
+R apply(T t);
+This transforms an input to an output
+Function<String, Integer> length = s -> s.length();
+int res = length.apply("Hello");
+System.out.println(res); // Will print out 5;
+
+
+Q5. What is "effectively final"? 
+Why does Java require variables used in lambda expressions to be final or
+effectively final? 
+What happens if you try to modify a variable before or after it's used in a lambda?
+A: If a local var is assigned once and never changed even if it is not declared final.
+To gurantee safe capture, predicatable behavior and thread safety, Java require lambda expressions to be final or effectively final
+We cannot modify the var after using it in a lambda:
+int x = 1;
+Runnable r = () - > Sysout(x);
+x = 2; // This will cause error in compile-time.
+
+Q6. Explain the difference between the three types of method references: 
+(1)ClassName::staticMethod, 
+(2) object::instanceMethod,
+(3)ClassName::instanceMethod.
+For type 3, explain why the first parameter becomes the calling object.
+A: Method reference is a shorter way to write a lambda
+1. This is a static method of class, no object needed. 
+For example:
+Integer::parseInt  can be  s -> Integer.parseInt(s);
+
+2. Object is already known:
+String word = "Hello";
+word::concat  can be  s -> word.concat(s);
+
+3. Object comes from the parameter
+String::length  can be  s -> s.length();
+
+
+
+Q7. What is the difference between 
+Optional.of() and Optional.ofNullable()? 
+When should you use each one? What happens if you pass null to Optional.of()?
+A: 
+1. Optional.of() creates an Optional containing a non-null value. Throws NullPointerException if the arg is null.
+2. Optional.ofNullable() creates an Optional that can contain null. Return Optional.empty() if arg is null;
+Use Optional.of() when I'm sure the value is not null, otherwise use Optional.ofNullable();
+
+
+Q8. Compare orElse() and orElseGet() methods in Optional. 
+Which one is more efficient when the default value is expensive to compute? 
+Explain with an example.
+A: 
+1. orElse() takes a value as parameter, always evalutaesthe arg regardless of whether the Optional is empty or not.
+2. orElseGet() takes a Supplier<T> (a zero-arg lambda), evalutaesthe Supplier only if the Optional is empty.
+
+
+Q9. Why is Optional.get() considered dangerous? 
+What are the recommended alternatives? 
+Explain the best practices for extracting values from Optional objects
+A: When Optional is empty, it throws NoSuchElementException at runtime.
+If we want to extract values from Optional, we can use orElse(), orElseGet() to provide defaults without exceptions.
