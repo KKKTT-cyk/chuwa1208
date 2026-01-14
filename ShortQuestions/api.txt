@@ -1,0 +1,29 @@
+1.Compare Developer API vs User API
+A: Dev API used by developers, it used to do Machine-to-machine communication. Usually REST API, GraphQL
+User API used by end users, it used to do Human-to-system interaction. Usually like Web UI, Mobile App.
+
+2.Explain components of REST API?
+A: 
+Resource - Data entity
+URI - endpoint
+HTTP method - GET POST PUT DELETE 
+Headers - Content-Type 
+Body - Data (JSON.stringify())
+Response - Return status code and message.
+
+3.Compare each type of HTTP Method
+GET - Fetch Data
+POST - Add Data 
+PUT - Replace Data
+PATCH - Update Data 
+DELETE - Remove Data
+
+4.Explain authentication field in http header?
+This is used to verify client identity. We usually use JWT token or Encoded auth to verify.
+
+5.Explain cookies field in http header?
+It stores small data on client, sent automatically with requests.
+Used for Session management.
+
+6.Explain the purpose of http response headers? Why it is necessary?
+Provide metadata about the response. It helps client interpret response correctly.
