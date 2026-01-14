@@ -1,0 +1,60 @@
+1.Error, CheckedException, UncheckedException
+(1) No; Yes; No
+(2) OOM; SQLException; NullPointerException
+(3) Add JVM args; Catch or Throw; Carefully prevent (check all sub level for null pointer object)
+
+2. First run try block, if no exception, go to finally block; If exception, jump right away to catch block, then finally block.
+Finally will be returned. Finally almost always runs so its returned value would overwrite try block and catch block. Upstream caller would only see finally's returned value.
+
+3. For multiple catch blocks case, earlier catch's exception must be subclass of later's.
+OrderNotFoundException extends Exception so it is the subclass.
+Otherwise the large catch block will always run and completely ignore the small ones. 
+
+4.(1) throw is used inside a method body while throws is used in a method signature;
+(2) throws + exception class names
+    throw + exception object;
+(3) public void getOrder(String orderId) throws OrderNotFoundException, DBException, Exception {
+        throw new OrderNotFoundException();
+    }
+
+5.try-with-resources automatically release resources when the block finishes without finally block.
+java.lang.AutoCloseable
+LIFO order
+
+6.CheckedException extends Exception while UncheckedException extends RuntimeException
+For Exception, OrderNotFoundException extends Exception, programm may still succeed if the caller reacts properly (ask user to input another orderId);
+FOr RuntimeException, IllegalArgumentException("Order Id must be positive"), this should never happen if the programm is correct.
+
+7..values() is a static method to get an Array of all enum elements;
+Each element is a new object, by calling enum class constructor;
+
+enum ResultCode {
+    SUCCESS(200, "Success"),
+    NOTFOUND(404, "Not Found"),
+    UNAHUTHORIZED(401, "Token expired"),
+    FORBIDDEN(403, "Authentication failed");
+
+    private long code;
+    private String message;
+
+    private ResultCode(long code, String message) {
+        this.code = code;
+        this.message = message;
+    }
+}
+
+8.(1) Error code Interface defines a contract that all error enums must follow;
+(2) Each module defines its own concrete error enums (multiple allowed);
+(3) Base Business Exception
+(4) Exception usage at application boundaries
+
+polymorphism 
+
+9.(1) List: Insertion order; Set: No order; Queue: FIFO;
+(2) List: Allow duplicates; Set: No duplicates; Queue: Allow duplicates;
+(3) ArrayList; HashSet; PriorityQueue;
+(4) List: Index with random access, fast read; Set: De-duplication; Queue: task processing
+
+10.HashMap is not thread-safe while Hashtable is thread-safe.
+Hashtable uses coarse-grained sync, every operation locks the entire table, poor scalability;
+Modern ConcurrentHashMap is better with fine-grained optimistic locking for high scalability.

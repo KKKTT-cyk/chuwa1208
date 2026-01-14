@@ -1,0 +1,56 @@
+1. Backward compatability.
+Default methods are not required to be overrided thus existing API can still be used. Otherwise all existing API wont compile. 
+For example ArrayList implementing List with default method sort().
+
+2. Default methods are called by instances while static methods are called by interface itself.
+Default methods can be overriden. Static methods cannot be overriden.
+Default methods are used to add new functionality to an existing interface; Static methods are used when the method is related to the interface and does not depend on instance state.
+
+3. Functional interface is interface with only one abstract method. 
+With @FunctionalInterface, compiler would check if it has only one abstract method. Throw error otherwise.
+Yes. FunctionalInterface can have multiple default methods and static methods.
+
+4. Consumer, Supplier, Predicate, Function
+accept(T t), get(), test(T t), R apply(T t)
+with params, no return;
+no params, with return;
+with params, return boolean;
+with params, with return
+
+Consumer<String> printer = s -> System.out.println(s); printer.accept("Hello World");
+Supplier<Double> rndNum = () -> Math.random();
+Predicate<String> isEmpty = s -> s.isEmpty(); 
+Function<String, Integer> stringLength = s -> s.length();
+
+5. Effective final: A local variable is assigned only once and never changes after initialization.
+Prevent concurency bugs: Lambdas may execute in multithread environment, if local variables were mutable execution would be unpredicatable.
+Compiler error.
+
+6.
+(1) Reference to a static method of a class.
+e.g. Function<String, Integer> f = Integer::parseInt;
+equivalent lamba: Function<String, Integer> f = s -> Integer.parseInt(s);
+
+(2) Reference to an instance method of a specific object
+e.g.
+String greeting = "Hello";
+Function<String, String> f = greeting::concat;
+equivalent lambda: Function<String, String> f = s -> greeting.concat(s);
+
+(3) Reference to an instance method of an unknown object of that class
+(obj, args) -> obj.instanceMethod(args)
+The first object becomes the calling object.
+e.g.
+BiPredicate<String, String> p = String::equals;
+lambda equivalent: BiPredicate<String, String> p = (s1, s2) -> s1.equals(s2);
+
+In ClassName::instanceMethod, no instance is specified, so Java treats the first lambda parameter as the receiver object on which the instance method is invoked.
+
+7. Optional.of() will throw NPE if pass null while Optional.ofNullable() wont.
+Use Optional.of() if business logic should throw exception if null is passed.
+
+8. orElse(T t) t is evaluated eagerly. It is computed whether or not the Optional contains a value. Inefficient for expensive defaults.
+orElseGet(Supplier<? extends T> supplier) The supplier is evaluated lazily. It is called only if the Optional is empty
+
+9. Optional.get() can throw RuntimeException if the Optional is empty.
+Use orElse(), orElseGet(), orElseThrow()
