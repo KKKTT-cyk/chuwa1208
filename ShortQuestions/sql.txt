@@ -1,0 +1,28 @@
+Explain Referential Integrity in RDBMS/SQL with sample queries.
+1. Create Student Table
+Each Student has id, name, gender, birth, department.
+2. Insert some example students, including John, Lisa, Kevin.
+3. Create School Table
+The School has id, name, city, and year.
+4. Create Department Table
+The Department has id, name, building, School
+5. Create some example students again
+6. Create some example departments
+7. Delete department id 101
+8. Join all three tables.
+
+
+Explain Join in RDBMS/SQL with sample queries.
+1. A join combines rows from multiple tables based on a related column.
+For example:
+SELECT 
+    s.student_name,
+    d.dept_name,
+    sc.school_name
+FROM student s
+JOIN department d ON s.dept_id = d.dept_id
+JOIN school sc ON d.school_id = sc.school_id;
+
+It retrieves each student's name, department name, school name.
+From each student, it joins the department table if department id match the student's department id.
+From each student, it joins the school table if school id match the student's school id.
