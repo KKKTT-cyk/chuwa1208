@@ -1,0 +1,35 @@
+Part 1: Conceptual Questions
+Q1. What is the difference between a class and an object? Provide a real-world example.
+A: Class is a blueprint, object is an actual instance created from a class.
+For example, Car is a class. We can create multiple instances of this class, and each instance can own different values of the Car.
+
+
+Q2. If you create a parameterized constructor in a class, what happens to the default constructor? What
+must you do if you still need it?
+A: The default constructor becomes the parameterized constructor unless we define the non-parameter constructor.
+If we still need the non-para one, just keep both Class() and Class(x,x,x...)
+
+
+Q3. What are the four access modifiers in Java? List them from most restrictive to least restrictive.
+private -> default -> protected -> public
+
+
+Q4. Explain the difference between method overloading and method overriding.
+A: overriding modify the parent functions in children classes. overloading is multiple same name function with different type of arguments.
+
+
+Q5. Can you override a final method? Can you override a private method? Explain why or why not.
+A: Both are no. Final is immutable once it has been defined. 
+Private method can only be modified in the class that belongs to, if we want to modify, we need to name it protected.
+
+Q6. What is the difference between static polymorphism and dynamic polymorphism? When does each occur?
+A: Static polymorphism happens in Comile-Time, dynamic polymorphism happens in runtime.
+
+Q7. Why does Java not support multiple inheritance with classes? How can you achieve multiple inheritance in Java?
+A: Because it sometimes confused the developers who are responsible to maintain the classes.
+We can implement multiple interfaces to achieve the multi-inheritance.
+
+Q8. Consider the following code:
+List<Integer> lst = new ArrayList<>(); 
+Which principle of OOP does this demonstrate? Explain.
+A: Polymorphism: List is an interface, ArrayList in a concrete class of the List
