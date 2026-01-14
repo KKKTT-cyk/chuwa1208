@@ -1,0 +1,239 @@
+=SQL================
+Q1 - Explain Referential Integrity in RDBMS/SQL with sample queries.
+Referential Integrity in RDBMS/SQL:
+- ensures the accuracy and consistency of relationships between tables
+- FOREIGN KEY constraints:
+	guarantees that a foreign key in one table (the child table) must 
+	always reference a valid, existing primary key (or unique key) in 
+	another table (the parent table), or be NULL
+- prevents inserting invalid references or deleting parent records that are
+ still in use
+
+For example, in the given files:
+in TABLE student: FOREIGN KEY (dept_id) REFERENCES department(dept_id)
+inidcates that the Student table is the child table of the Ddepartment table
+
+in this case, a valid insert would be:
+INSERT INTO department VALUES (101, 'Computer Science');
+INSERT INTO student VALUES (1, 'Alice', 101);
+
+and invalid insert would be:
+INSERT INTO student VALUES (2, 'Bob', 999);
+because a department with dept_id=999 does not exsist
+
+similarly, doing
+DELETE FROM department WHERE dept_id = 101;
+is invalid baecause Students still reference dept_id = 101
+
+to get around with it, we need to
+FOREIGN KEY (dept_id)
+REFERENCES department(dept_id)
+ON DELETE CASCADE
+
+
+
+Q2 - Explain Join in RDBMS/SQL with sample queries.
+Join in RDBMS/SQL:
+- combines data from multiple tables
+- based on a related column
+- used to query relational data
+
+Inner Join:
+- returns only rows with matching keys in both tables
+- rows without a match in either table are excluded
+
+sample code:
+SELECT *
+FROM student s
+JOIN department d ON s.dept_id = d.dept_id;
+
+sample output:
+student_id | student_name | dept_id | dept_id | dept_name
+-----------+--------------+---------+---------+-------------
+1001       | Alice        | 101     | 101     | CS
+1002       | Bob          | 102     | 102     | EE
+
+Left Join:
+- returns all rows from the left table
+- missing matches from the right table are shown as NULL
+
+sample code:
+SELECT s.student_name, d.dept_name
+FROM student s
+LEFT JOIN department d ON s.dept_id = d.dept_id;
+
+sample output:
+student_name | dept_name
+-------------+-----------
+Alice        | CS
+Bob          | EE
+Carol        | NULL
+
+Right join:
+- returns all rows from the right table
+- missing matches from the left table are shown as NULL
+
+sample code:
+SELECT s.student_name, d.dept_name
+FROM student s
+RIGHT JOIN department d ON s.dept_id = d.dept_id;
+
+sample output:
+student_name | dept_name
+-------------+-----------
+Alice        | CS
+Bob          | EE
+NULL         | Law
+
+Full Join (needs UNION keyword)
+- returns all rows from both tables
+- includes both matched rows and unmatched rows from either side
+- implemented using LEFT JOIN + RIGHT JOIN + UNION
+
+sample code:
+SELECT s.student_name, d.dept_name
+FROM student s
+LEFT JOIN department d ON s.dept_id = d.dept_id
+UNION
+SELECT s.student_name, d.dept_name
+FROM student s
+RIGHT JOIN department d ON s.dept_id = d.dept_id;
+
+sample output:
+student_name | dept_name
+-------------+-----------
+Alice        | CS
+Bob          | EE
+Carol        | NULL
+NULL         | Law
+
+
+=Short Answer==========================
+Q1 - Compare Developer API vs User API
+Developer API:
+- apis designed for developers to integrate systems in applications or fetching data
+- Examples: 
+	Interfaces & Developer Kits (e.g. JDK): integrate systems
+	REST, GraphQL, SOAP: fetch data
+
+User API:
+- apis designs for direct access for end users using user interfaces
+- supports direct end-user interactions
+
+Q2 - Explain components of REST API?
+Resources
+- data and entities to be used/consumed
+
+Endpoints
+- URIs(URLs) that identify and access the resource
+
+HTTP Methods
+- defines actions used on resources
+- includes: GET, POST, PUT, PATCH, DELETE
+
+HTTP Status Code
+- indicator of thre result of requests
+- e.g. 200, 201, 400, 404, 500
+
+Request/Responce
+- data exchanged between client and server
+- usually represented in JSON files/format
+
+
+Q3 - Compare each type of HTTP Method
+GET
+- Purpose: Retrieve representation of data from specified rescource (read-only)
+- Has request body: No
+- Idempotent: Yes
+- Safe (no side effects): Yes
+Example: Get a user or list of users
+
+POST
+- Purpose: Submit an entity to a specified resource (often result in creation of new resource)
+- Has request body: Yes
+- Idempotent: No
+- Safe (no side effects): No
+Example: Create new user
+
+PUT
+- Purpose: Update/replace existing resource
+- Has request body: Yes
+- Idempotent: No
+- Safe (no side effects): No
+Example: Replace user profile
+
+PATCH
+- Purpose: Apply partial modification to a resource
+- Has request body: Yes
+- Idempotent: Yes (in most case, depends on implementation)
+- Safe (no side effects): No
+Example: Update user email (only)
+
+DELETE
+- Purpose: Remove a specified resource
+- Has request body: No (in most cases)
+- Idempotent: Yes
+- Safe (no side effects): No
+Example: Delete user from list
+
+
+Q4 - Explain authentication field in http header?
+Purpose:
+- send authentication credentials from client to server
+
+General Syntax:
+Authorization: <type> <credentials>
+ - <type>: the authentication scheme which indicates the method 
+	   used to encode or handle the credentials 
+ - <credentials>: the actual token or encoded data
+
+Common Authentication Types:
+i) Basic:
+- Username and password encoded in Base64
+Example: Authorization: Basic dXNlcjpwYXNzd29yZA==
+
+ii) Bearer Token:
+- Most common in REST APIs
+- Token-based authentication such as JWT or OAuth access token
+Example: Authorization: Bearer <token>
+
+iii) API Keys:
+- Simple token-based access mechanism; identifies the application
+Example: Authorization: X-API-Key: abcdef12345
+
+Q5 - Explain cookies field in http header?
+Purpose:
+- store and send small pieces of data between client and server, 
+  mainly for session management and user state
+
+Header Names:
+- Cookie: sent from client to server
+- Set-Cookie: sent from server to client
+
+How it works:
+- server sends Set-Cookie in the response
+- browser stores the cookie
+- browser automatically includes Cookie in future requests to the same domain
+
+Common Uses:
+- session identification
+- user login state
+- user preferences (e.g. language, theme)
+
+Important Attributes:
+- Expires/Max-Age: cookie lifetime
+- HttpOnly: not accessible by JavaScript
+- Secure: sent only over HTTPS
+- SameSite: controls cross-site request behavior
+
+
+Q6 - 
+Explain the purpose of http response headers? 
+- Provide metadata about the response
+- Control client behavior
+- Communicate server instructions
+
+Why it is necessary?
+- helps maintain state and context across requests
+- separates data and control
+- ensure correct client behavior
