@@ -3,6 +3,5 @@ public class Test {
         Vehicle v = new Car("Toyota", 120, 4);
         Motorcycle m = new Motorcycle("Halei", 60, true);
         v.displayInfo();
-        m.displayInfo();
     }
 }
