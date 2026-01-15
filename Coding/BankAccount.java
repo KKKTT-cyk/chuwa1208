@@ -35,7 +35,7 @@ public class BankAccount{
         if (amount > 0){
             balance += amount;
         }else {
-            System.out.println("Deposit cannot be negative")
+            System.out.println("Deposit cannot be negative");
         }
     }
     // withdraw method
