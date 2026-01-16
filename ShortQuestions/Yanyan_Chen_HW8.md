@@ -2,7 +2,6 @@
 
 ## 0. Environment
 - OS: macOS
-- Java version: 18.0.2.1
 - Database: mySQL
 
 ---
