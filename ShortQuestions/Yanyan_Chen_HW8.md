@@ -19,10 +19,10 @@
 - spring.datasource.password=NewStrongPassword123!
 
 ### local database check
-<img width="1444" height="750" alt="image" src="https://github.com/user-attachments/assets/3cb5e8d9-48a9-4034-b2c0-0e4a7a2fba8d" />
+<img width="1130" height="714" alt="image" src="https://github.com/user-attachments/assets/5b99a05f-977b-4d95-8f0e-36955f28e598" />
 
 ### application.properties changes
-<img width="1444" height="750" alt="image" src="https://github.com/user-attachments/assets/5557de1e-e48a-47e2-afe1-74d3c1860fea" />
+<img width="1444" height="750" alt="image" src="https://github.com/user-attachments/assets/3cb5e8d9-48a9-4034-b2c0-0e4a7a2fba8d" />
 
 ---
 
