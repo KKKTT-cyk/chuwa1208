@@ -1,4 +1,4 @@
-**1. List all of the annotations you learned from class and homework**
+**List all of the annotations you learned from class and homework**
 
 @Autowired
 Injects required dependencies into a Spring-managed component (constructor injection is preferred).
@@ -34,7 +34,7 @@ Marks the class as a RESTful web controller where methods return data objects (e
 @RequestMapping("/path")
 Defines the base URL path (and optional HTTP methods) for the controller or handler methods.
 
-**2. Type out the code for the Comment feature of the class project**
+**Type out the code for the Comment feature of the class project**
 
 Entity
 
@@ -62,12 +62,12 @@ public interface CommentRepository extends JpaRepository<Comment, Long> {
 }
 ```
 
-**4. What is JPA? What is Hibernate?**
+**What is JPA? What is Hibernate?**
 
 JPA (Java Persistence API) is a Java specification that defines how to manage relational data using Java objects.
 Hibernate is an ORM (Object Relational Mapping) framework that implements the JPA specification and provides additional features such as caching and advanced query support.
 
-**5. What is Hikari? What are the benefits of connection pool?**
+**What is Hikari? What are the benefits of connection pool?**
 
 HikariCP is a high-performance JDBC connection pool used by Spring Boot by default.
 Benefits of connection pooling include:
@@ -76,14 +76,14 @@ Reduced connection creation overhead
 Better resource management
 Improved application performance
 
-**6. What is @OneToMany, @ManyToOne, @ManyToMany? Give examples**
+**What is @OneToMany, @ManyToOne, @ManyToMany? Give examples**
 
 @OneToMany: One Post has many Comments
 @ManyToOne: Many Comments belong to one Post
 @ManyToMany: Students and Courses where many students can take many courses
 These annotations define relationships between entities.
 
-**7. What is cascade = CascadeType.ALL, orphanRemoval = true? Other CascadeTypes?**
+**What is cascade = CascadeType.ALL, orphanRemoval = true? Other CascadeTypes?**
 
 CascadeType.ALL: Applies all cascade operations (PERSIST, MERGE, REMOVE, REFRESH, DETACH)
 orphanRemoval = true: Automatically deletes child entities when they are removed from the parent
@@ -94,14 +94,14 @@ REMOVE – Delete child when parent is deleted
 REFRESH – Refresh child state
 DETACH – Detach child from persistence context
 
-**8. What is FetchType.LAZY and FetchType.EAGER?**
+**What is FetchType.LAZY and FetchType.EAGER?**
 
 FetchType.LAZY: Data is loaded only when accessed
 FetchType.EAGER: Data is loaded immediately
 LAZY is preferred for better performance. EAGER is used when related data is always needed.
 
 
-**9. What is the rule of the JPA naming convention?**
+**What is the rule of the JPA naming convention?**
 
 JPA allows automatic query generation based on method names.
 Examples:
@@ -111,7 +111,7 @@ findByEmailAndStatus
 deleteByPostId
 We do not need to implement these methods manually.
 
-**10. Use JPA advanced methods in repository layer**
+**Use JPA advanced methods in repository layer**
 
 Advanced JPA methods use naming conventions:
 findByTitleContaining
@@ -120,40 +120,40 @@ findByStatusOrderByCreatedAtDesc
 countByUserId
 These methods are automatically implemented by Spring Data JPA.
  
-**13. What is JPQL?**
+**What is JPQL?**
 
 JPQL (Java Persistence Query Language) is an object-oriented query language used to query JPA entities instead of database tables.
 
-**14. What is @NamedQuery and @NamedQueries?**
+**What is @NamedQuery and @NamedQueries?**
 
 @NamedQuery defines a static JPQL query at the entity level.
 @NamedQueries is a container for defining multiple named queries
 
-**15. What is @Query? Where do we write it?**
+**What is @Query? Where do we write it?**
 
 @Query allows us to write custom SQL or JPQL directly.
 It is written in the Repository interface.
 
-**16. What is HQL and Criteria Queries?**
+**What is HQL and Criteria Queries?**
 
 HQL (Hibernate Query Language) is similar to JPQL but specific to Hibernate
 Criteria Queries provide a programmatic and type-safe way to build queries
 
-**17. What is EntityManager?**
+**What is EntityManager?**
 
 EntityManager is the core JPA interface used to manage entities, execute queries, and control persistence context.
 
-**18. What is SessionFactory and Session?**
+**What is SessionFactory and Session?**
 
 SessionFactory: Creates Hibernate sessions and is thread-safe
 Session: Represents a single unit of work with the database
 
-**19. What is Transaction? How to manage it?**
+**What is Transaction? How to manage it?**
 
 A transaction ensures data consistency by grouping database operations.
 Transactions can be managed using @Transactional or programmatically using EntityManager.
 
-**20. What is Hibernate Caching?**
+**What is Hibernate Caching?**
 
 Hibernate caching improves performance by storing frequently accessed data.
 It includes:
@@ -161,12 +161,12 @@ First-level cache (Session level)
 Second-level cache (SessionFactory level)
 Optional query cache
 
-**21. Difference between first-level and second-level cache**
+**Difference between first-level and second-level cache**
 
 First-level cache: Enabled by default, scoped to a session
 Second-level cache: Shared across sessions, must be explicitly enabled
 
-**22. How do you understand @Transactional?**
+**How do you understand @Transactional?**
 
 @Transactional ensures that a method runs within a transaction.
 If an exception occurs, all database operations are rolled back automatically, ensuring data consistency.
