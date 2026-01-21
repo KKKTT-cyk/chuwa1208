@@ -9,9 +9,11 @@
 @Entity , @Table , @Id , @Column
 
 2. Type out the code for the Comment feature of the class project.
+(In coding file)
 
 3. In postman, call all of the APIs in PostController and CommentController.
-
+(In Jan16_3.pdf
+)
 4. What is JPA? and what is Hibernate?
 JPA (Java Persistence API) is a specification (a standard) for how Java objects are stored in a database.
 JPA defines WHAT methods and annotations exist, but does not implement them.
@@ -77,18 +79,17 @@ No, Spring Data JPA automatically implements methods that follow the naming conv
 List<Comment> findByPostId(Long postId);
 Page<Post> findByTitle(String title, Pageable pageable);
 
-10. Try to use JPA advanced methods in your class project. In the repository layer, you need to use the
-naming convention to use the method provided by JPA.
+10. Try to use JPA advanced methods in your class project. In the repository layer, you need to use the naming convention to use the method provided by JPA.
+(In coding file)
 
-11. (Optional) Check out a new branch(https://github.com/TAIsRich/springboot-redbook/tree/hw02_01_jdbcT
-emplate) from branch 02_post_RUD, replace the dao layer using JdbcTemplate.
+11. (Optional) Check out a new branch(https://github.com/TAIsRich/springboot-redbook/tree/hw02_01_jdbcTemplate) from branch 02_post_RUD, replace the dao layer using JdbcTemplate.
 
-12. type the code, you need to checkout new branch from branch 02_post_RUD, name the new branch with h
-ttps://github.com/TAIsRich/springboot-redbook/tree/hw05_01_slides_JPQL.
+12. type the code, you need to checkout new branch from branch 02_post_RUD, name the new branch with https://github.com/TAIsRich/springboot-redbook/tree/hw05_01_slides_JPQL.
 
 13. What is JPQL?
 JPQL (Java Persistence Query Language) is a database-independent query language used to query JPA entities, not database tables.
 JPQL queries Java objects and their fields, and JPA (Hibernate) translates them into SQL for your database.
+
 14. What is @NamedQuery and @NamedQueries?
 @NamedQuery allows you to define a static JPQL query with a name, so it can be reused anywhere in the application.
 It is defined once, usually on an @Entity, and referenced by name.
