@@ -87,9 +87,10 @@ Typical scenarios include:
 - Enum conversions may require explicit mapping when enum names differ.
 
 ---
-# Q6 Customized Post Title Already Exists Exceptions response
+# Q6 Custom exception handling (data validation): The title is empty, error code: 422 Unprocessable Entity
 
-<img width="2536" height="1534" alt="image" src="https://github.com/user-attachments/assets/7f48837f-da56-452b-97f8-47d3c1990d4c" />
+<img width="1268" height="784" alt="image" src="https://github.com/user-attachments/assets/c15b6d18-9fc3-4841-8667-b92d3ca62a22" />
+
 
 ---
 
