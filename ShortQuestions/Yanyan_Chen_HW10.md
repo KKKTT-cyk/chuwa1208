@@ -125,6 +125,19 @@ A **customized API exception** (such as `BlogAPIException` or a user-defined `In
 
 ---
 
+# Q9. Write some regular expression to restrict the value of attributes that your PostorComment can have. You may use https://regex101.com/ to construct and test/validate your regular expression.
+
+### Test Case 1: The post title contains special characters
+
+<img width="1268" height="896" alt="image" src="https://github.com/user-attachments/assets/2008a920-f7d1-416e-b194-c8a51dfe8d76" />
+
+### Test Case 2: the comment invalid email format
+
+<img width="1268" height="896" alt="image" src="https://github.com/user-attachments/assets/6fc9cd72-0ff9-4d2c-b269-47359c267110" />
+
+
+---
+
 # Q10. Explain Spring Framework Fundamental Principles and How They Help Build Business Applications
 
 **Inversion of Control (IoC)**: Spring manages object lifecycles and dependencies, reducing manual wiring and enabling modular design.
