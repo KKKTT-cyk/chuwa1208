@@ -114,14 +114,15 @@ Other approaches include:
 
 A **regular exception** (such as `NullPointerException`) is usually not meaningful to API consumers. Without a specific handler, it is typically caught by the global exception mechanism and returned as a generic `500 Internal Server Error`, often with limited and uncontrolled messaging.
 
+<img width="1268" height="896" alt="image" src="https://github.com/user-attachments/assets/77a818fe-b94a-404f-a842-ece0068dfa47" />
+
+
 A **customized API exception** (such as `BlogAPIException` or a user-defined `InvalidContentException`) represents a known business scenario. It allows:
 - A clear and meaningful error message for clients.
 - A specific HTTP status code (e.g., 400, 404, 409, 422).
 - A consistent error response body (timestamp, message, and details).
 
-**Screenshots provided:**
-- Regular exception returning a 500 status with generic error details.
-- Customized API exception returning the expected status code (e.g., 422) and a custom response body.
+<img width="1268" height="784" alt="image" src="https://github.com/user-attachments/assets/d81e55bc-9acb-4f77-bdb7-411ea089c975" />
 
 ---
 
@@ -150,6 +151,66 @@ A **customized API exception** (such as `BlogAPIException` or a user-defined `In
 **Convention over Configuration and Auto-Configuration (Spring Boot)**: Reduces boilerplate configuration, allowing developers to focus on business logic more efficiently.
 
 These principles make business applications easier to scale, test, extend, and maintain consistently across teams.
+
+---
+
+# Q12. Explain different types of application context in Spring framework, with screenshots. You may take https:// github.com/CTYue/springIOC for reference.
+
+
+This project demonstrates different types of Spring `ApplicationContext` using XML-based and Java-based configurations.
+
+---
+
+## 1. ClassPathXmlApplicationContext (XML-based)
+
+`ClassPathXmlApplicationContext` loads bean definitions from an XML file located in the classpath (e.g. `resources` folder).  
+Beans can be defined using `<bean>` or discovered using `<context:component-scan>`.
+
+**Code Usage**  
+- `SpringIocContainerApplication.java`
+- Line: `new ClassPathXmlApplicationContext("bean.xml")`
+
+<img width="2872" height="1746" alt="image" src="https://github.com/user-attachments/assets/796a478f-4356-4d16-970a-e8552f375c0d" />
+
+
+**XML Configuration (Screenshot Required)**  
+- `bean.xml`
+- `<context:component-scan>` and `<bean>` definitions
+
+<img width="2872" height="1746" alt="image" src="https://github.com/user-attachments/assets/ae512b1e-c382-4970-8875-e3fdc59bac65" />
+
+## 2. AnnotationConfigApplicationContext (Java-based)
+
+`AnnotationConfigApplicationContext` loads beans from Java configuration classes annotated with `@Configuration`.  
+Beans are defined using `@Bean` methods or component scanning.
+
+**Code Usage**  
+- `SpringIocContainerApplication.java`
+- Line: `new AnnotationConfigApplicationContext(BeanConfig.class)`
+
+<img width="2872" height="1746" alt="image" src="https://github.com/user-attachments/assets/93c3e47c-59ef-4191-9df9-f513171d9b94" />
+
+**Java Configuration Class**  
+- `BeanConfig.java`
+- `@Configuration`, `@ComponentScan`, and `@Bean`
+
+<img width="2872" height="1746" alt="image" src="https://github.com/user-attachments/assets/906af183-2863-43f3-b0db-73fe1756d134" />
+
+## 3. Multiple ApplicationContext Instances
+
+The project creates multiple `ApplicationContext` instances.  
+Each context is independent and manages its own beans.
+
+**Code Usage**  
+- `SpringIocContainerApplication.java`
+- creation of `context`, `context2`, and `context3`
+
+<img width="2872" height="1746" alt="image" src="https://github.com/user-attachments/assets/82f3c6f5-573d-4abb-a7c7-643dc9738329" />
+
+This project demonstrates:
+- XML-based configuration using `ClassPathXmlApplicationContext`
+- Java-based configuration using `AnnotationConfigApplicationContext`
+- Usage of multiple independent ApplicationContext containers
 
 ---
 
