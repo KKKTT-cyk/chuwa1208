@@ -129,7 +129,8 @@ A **customized API exception** (such as `BlogAPIException` or a user-defined `In
 
 ### Test Case 1: The post title contains special characters
 
-<img width="1268" height="896" alt="image" src="https://github.com/user-attachments/assets/2008a920-f7d1-416e-b194-c8a51dfe8d76" />
+<img width="1268" height="896" alt="image" src="https://github.com/user-attachments/assets/96cdd61c-0955-4cdb-ad98-f23c0f089092" />
+
 
 ### Test Case 2: the comment invalid email format
 
