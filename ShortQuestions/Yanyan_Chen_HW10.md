@@ -89,11 +89,11 @@ Typical scenarios include:
 ---
 # Q6 Custom exception handling (data validation): check if the title is empty or too long, error code: 422 Unprocessable Entity
 
-### Test Case 1: the title is empty
+### Test Case 1: the post title is empty
 
 <img width="1268" height="784" alt="image" src="https://github.com/user-attachments/assets/c15b6d18-9fc3-4841-8667-b92d3ca62a22" />
 
-### Test Case 2: the title is too long
+### Test Case 2: the post title is too long (cannot exceed 100 characters)
 
 <img width="1268" height="784" alt="image" src="https://github.com/user-attachments/assets/92181fda-b82b-434b-83db-4f08b470fd0e" />
 
