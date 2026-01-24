@@ -100,3 +100,133 @@
 3. `HandlerExceptionResolver`: You can implement this interface for low-level global error handling, though it is more complex and less common than using Controller Advice.
 
 ----
+
+### Q8\. What's the difference between throwing a regular exception and a customized API exception that will be eventually thrown to Controller Advice codes? Please provide screenshots to explain your findings
+
+
+---
+
+### Q9\. Write some regular expression to restrict the value of attributes that your Post or Comment can have. You may use https://regex101.com/ to construct and test/validate your regular expression.
+
+
+
+
+
+---
+
+### Q10\. Explain Spring framework fundamental principles. And how can they help build business applications?
+### Spring Framework Fundamental Principles
+
+### 1. Inversion of Control (IoC) & Dependency Injection (DI)
+**Concept:** Basically, instead of your code creating objects itself (like doing `new Database()`), Spring does the heavy lifting for you. It creates the objects and "injects" them into your class when the app starts.
+**Business Benefit:**
+1. **Loose Coupling:** Your code isn't stuck to one specific implementation, so it's easier to change things later.
+2. **Testing:** It makes unit testing way easier because you can swap in "mock" database connections without rewriting your actual code.
+
+### 2. Aspect-Oriented Programming (AOP)
+**Concept:** AOP handles the repetitive stuff that isn't part of your main business logic—like logging, security checks, or transactions. You write this logic once, and Spring applies it automatically across your application.
+**Business Benefit:**
+1. **Clean Code:** Your business methods stay clean and focused, without being cluttered by repetitive logging or error handling code.
+2. **Consistency:** It ensures important rules, like security, are applied everywhere automatically, so you don't accidentally forget to secure a new page.
+
+---
+
+### Q11\. Explain different types of dependency injection, explain their suitable use cases, and why fielde injection is not recommended in general. Please provide necessary code snippets and screenshots if possible.
+1. Constructor Injection (Recommended)
+* This is the most common and generally preferred method. You explicitly define a constructor that accepts the required dependencies as arguments.
+* Suitable Use Cases:
+* Mandatory Dependencies: Use this when your class absolutely needs the dependency to function. It guarantees the object is never in an invalid state.
+* Unit Testing: It makes testing super easy because you can just pass in a "mock" object when you call `new PostServiceImpl(...)`.
+* Immutability: It allows you to mark your fields as `final`, ensuring they don't get overwritten later.
+
+```java
+@Service
+public class PostServiceImpl implements PostService {
+    // Allows the field to be final (Immutable)
+    private final PostRepository postRepository;
+
+    // Spring automatically finds the bean and passes it here
+    public PostServiceImpl(PostRepository postRepository) {
+        this.postRepository = postRepository;
+    }
+}
+
+```
+2. Setter Injection
+* In this approach, you provide a public setter method annotated with `@Autowired`. Spring creates the object first, and then calls this method to "set" the dependency.
+* Suitable Use Cases:
+* Optional Dependencies: If a dependency isn't strictly required (e.g., a logger or cache), you can use this. If Spring doesn't find the bean, the class can still work, if you handle the null check.
+* Reconfiguration: Technically allows you to swap the dependency after the object is created, though this is rare in practice.
+
+```java
+@Service
+public class PostServiceImpl implements PostService {
+    private PostRepository postRepository;
+
+    // The dependency is injected after the object is created
+    @Autowired
+    public void setPostRepository(PostRepository postRepository) {
+        this.postRepository = postRepository;
+    }
+}
+
+```
+3. Field Injection
+* This involves placing the `@Autowired` annotation directly on the field itself. It looks the cleanest because it requires the least amount of code.
+```java
+@Service
+public class PostServiceImpl implements PostService {
+    // Dependencies are injected via Reflection
+    @Autowired
+    private PostRepository postRepository;
+}
+
+```
+* Disadvantages:
+1. Difficult Testing: You cannot easily pass "mock" objects for unit tests because there is no constructor or setter to access the field.
+2. No Immutability: You cannot make the fields `final`, which prevents you from creating immutable, thread-safe components.
+3. Hidden Dependencies: It hides the class's requirements. Unlike a constructor that clearly lists what dependencies are needed, field injection makes it easy to add too many dependencies without realizing it, which creates bloated code.
+
+---
+
+
+### Q12\.Explain different types of application context in Spring framework, with screenshots. You may take https://github.com/CTYue/springIOC for reference.
+
+
+---
+
+
+### Q13\. Compare @Component and @Bean and in which scenario they should be used.
+
+
+
+---
+
+
+### Q14\. Explain Spring bean scopes and how to pick the correct bean scope.
+
+
+
+---
+
+
+### Q15\. Explain the difference between bean id and bean class.
+
+
+---
+
+
+### Q16\. Explain that when a bean has multiple alternative implementations, how will Spring decide which bean implementation to inject/autowire?
+
+
+
+---
+
+
+
+
+
+
+---
+
+
