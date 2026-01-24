@@ -1,4 +1,4 @@
-# Annotations Learned from Spring Data (Class & Homework)
+# Annotations Learned
 
 ---
 
