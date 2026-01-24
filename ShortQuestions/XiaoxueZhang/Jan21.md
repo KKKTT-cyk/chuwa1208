@@ -17,6 +17,7 @@ Provides global exception handling and cross-cutting logic for controllers.
 Triggers Bean Validation on an object (DTO/entity).
 @NotEmpty
 A validation constraint ensuring a field is not null and not empty.
+
 2. Walkthrough sample codes under https://github.com/CTYue/springboot-redbook/commits/06_mapper-ex
 ception, you are supposed to bring up the application on your local.
 3. Explain why do we need model mappers in Spring, and in what scanrios we need it.
@@ -32,7 +33,7 @@ Nested / complex structure mismatch: ModelMapper does not flatten nested objects
 ModelMapper converts different data types using built-in converters for compatible types and falls back to custom converters when automatic type casting is not possible.
 
 6. Add your own API exceptions so that when something wrong happens in service layer, your rest API will return your customized response and status code.
-
+()
 7. Explain how Controller Advices work, is there any other approach to do same/similar global API exception handling?
 A request hits a controller endpoint.
 -> Your controller/service throws an exception (e.g., ResourceNotFoundException).
@@ -47,6 +48,11 @@ Extend ResponseEntityExceptionHandler
 eventually thrown to Controller Advice codes? Please provide screenshots to explain your findings.
 9. Write some regular expression to restrict the value of attributes that your Post or Comment can have. You
 may use https://regex101.com/ to construct and test/validate your regular expression.
+Pattern(
+regexp = "^[A-Za-z0-9][A-Za-z0-9\\s.,!?'-]{2,99}$",
+message = "Title must be 3–100 characters and contain only letters, numbers, and basic punctuation"
+)
+
 10. Explain Spring framework fundamental principles. And how can they help build business applications?
 Spring is a lightweight, modular framework that simplifies building enterprise Java applications by managing object creation, dependencies, and cross-cutting concerns.
 The Spring Framework is based on core principles such as Inversion of Control, Dependency Injection, Aspect-Oriented Programming, and abstraction over infrastructure. These principles promote loose coupling, separation of concerns, and modular design, allowing developers to build scalable, maintainable, and testable business applications efficiently.
