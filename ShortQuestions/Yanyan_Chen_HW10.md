@@ -154,6 +154,23 @@ These principles make business applications easier to scale, test, extend, and m
 
 ---
 
+# Q11. Types of Dependency Injection, Use Cases, and Why Field Injection Is Not Recommended
+
+### Constructor Injection  
+The recommended approach for required dependencies. It ensures objects are created in a valid state, supports immutability through `final` fields, and is the easiest to unit test.
+
+### Setter Injection  
+Useful for optional dependencies or in rare cases where circular dependencies must be resolved (although redesign is usually preferred).
+
+### Field Injection (`@Autowired` on fields)  
+Not recommended because:
+- It makes unit testing harder and often requires reflection or a Spring context.
+- Dependencies are hidden and not visible in the constructor signature.
+- Fields cannot be declared `final`, weakening immutability.
+- It encourages uncontrolled dependency growth.
+
+---
+
 # Q12. Explain different types of application context in Spring framework, with screenshots. You may take https:// github.com/CTYue/springIOC for reference.
 
 
@@ -211,23 +228,6 @@ This project demonstrates:
 - XML-based configuration using `ClassPathXmlApplicationContext`
 - Java-based configuration using `AnnotationConfigApplicationContext`
 - Usage of multiple independent ApplicationContext containers
-
----
-
-# Q11. Types of Dependency Injection, Use Cases, and Why Field Injection Is Not Recommended
-
-### Constructor Injection  
-The recommended approach for required dependencies. It ensures objects are created in a valid state, supports immutability through `final` fields, and is the easiest to unit test.
-
-### Setter Injection  
-Useful for optional dependencies or in rare cases where circular dependencies must be resolved (although redesign is usually preferred).
-
-### Field Injection (`@Autowired` on fields)  
-Not recommended because:
-- It makes unit testing harder and often requires reflection or a Spring context.
-- Dependencies are hidden and not visible in the constructor signature.
-- Fields cannot be declared `final`, weakening immutability.
-- It encourages uncontrolled dependency growth.
 
 ---
 
