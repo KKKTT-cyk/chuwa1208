@@ -181,7 +181,7 @@
 
 ---
 
-## Dependency Injection (Summary)
+## Dependency Injection
 
 - **`@Autowired`**  
   Performs automatic dependency injection by type.  
