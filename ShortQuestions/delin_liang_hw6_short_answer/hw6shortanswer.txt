@@ -1,0 +1,261 @@
+Question 2 - Write a thread-safe singleton class 
+
+public class Singleton {
+    private static final Singleton INSTANCE = new Singleton();
+    private Singleton() {}
+
+    public static Singleton getInstance() {
+        return INSTANCE;
+    }
+}
+
+
+Question 3 - How to create a new thread(Please also consider Thread Pool approach)?
+
+Create a thread directly:
+Thread t = new Thread(() -> {
+    // TODO
+});
+t.start();
+
+Using Thread Pool:
+ExecutorService executor = Executors.newFixedThreadPool(4);
+executor.submit(() -> {
+    // TODO
+});
+
+
+Question 4 - Difference between Runnable and Callable?
+
+- Runnable does not return a result and cannot throw checked exceptions while Callable does
+- Callable is usually used with ExecutorService and Future to get the result of asynchronous
+execution
+
+
+Question 5 - What is the difference between t.start() and t.run()?
+
+t.start() creates a new thread and executes run() in that new thread
+while t.run() only runs the method in the current thread, it does not create a new thread
+
+
+Question 6 - Which way of creating threads is better: Thread class or Runnable interface?
+
+Runnable interface is better 
+because it separates the task from the thread and allows the class to extend other classes, 
+which is more flexible and reusable
+
+
+Question 7 - What are the thread statuses?
+
+NEW – Thread is created but not started
+RUNNABLE – Thread is ready or running
+BLOCKED – Thread is blocked waiting for a monitor lock
+WAITING – Thread is waiting indefinitely for another thread’s action
+TIMED_WAITING – Thread is waiting for a specified time
+TERMINATED – Thread has finished execution
+
+
+Question 8 - Demonstrate deadlock and how to resolve it in Java code
+
+Deadlock occurs when multiple threads hold locks and wait for each other indefinitely.
+It can be resolved by enforcing a consistent lock acquisition order
+
+For example:
+Thread t1 = new Thread(() -> {
+            synchronized (LOCK_A) {
+                try { Thread.sleep(100); } catch (InterruptedException e) {}
+                synchronized (LOCK_B) {
+                    System.out.println("AAA");
+                }
+            }
+        });
+
+        Thread t2 = new Thread(() -> {
+            synchronized (LOCK_B) {
+                try { Thread.sleep(100); } catch (InterruptedException e) {}
+                synchronized (LOCK_A) {
+                    System.out.println("BBB");
+                }
+            }
+        });
+is a deadlock: t1 holds Lock A and wait for Lock B, while t2 holds Lock B and waits for Lock A
+
+To resolve, we do:
+Thread t1 = new Thread(() -> {
+            synchronized (LOCK_A) {
+                synchronized (LOCK_B) {
+                    System.out.println("AAA");
+                }
+            }
+        });
+
+        Thread t2 = new Thread(() -> {
+            synchronized (LOCK_A) {
+                synchronized (LOCK_B) {
+                    System.out.println("BBB");
+                }
+            }
+        });
+
+
+
+Question 9 - How do threads communicate each other?
+
+Threads communicate with each other using shared objects and synchronization mechanisms,
+and built-in wait(), notify(), and notifyAll() methods
+
+
+Question 10 - What’s the difference between class lock and object lock?
+
+- Object lock locks on a specific object instance (this), so different objects do not block
+each other
+- Class lock locks on the Class object (ClassName.class), so all threads accessing static 
+synchronized code are mutually exclusive across all instances
+
+
+Question 11 - What is join() method?
+It is used to make the current thread wait until another thread finishes execution
+
+
+Question 12 - what is yield() method
+It is used to hint the thread scheduler to pause the current thread and give other threads 
+of the same priority a chance to execute
+
+Question 13 - 
+What is ThreadPool? 
+A ThreadPool is a pool of reusable threads used to execute multiple tasks concurrently, 
+which avoids the overhead of creating and destroying threads repeatedly
+
+How many types of ThreadPool? 
+There are 3 types:
+FixedThreadPool – A fixed number of threads
+CachedThreadPool – Threads are created and reused dynamically
+SingleThreadExecutor – A single worker thread.
+
+What is the TaskQueue in ThreadPool?
+It stores tasks that are waiting to be executed when all threads in the pool are busy. Threads 
+take tasks from the queue and execute them when available
+
+
+Question 14 - 
+Which Library is used to create ThreadPool? 
+java.util.concurrent
+
+Which Interface provide main functions of thread-pool?
+ExecutorService
+
+Question 15 - How to submit a task to ThreadPool?
+Use the submit() method in the ExecutorService interface
+
+Question 16 - What is the advantage of ThreadPool?
+It improves performance by reusing threads, reduces the overhead of thread creation and 
+destruction, controls the number of concurrent threads, and provides better resource and 
+lifecycle management
+
+Question 17 - Difference between shutdown() and shutdownNow() methods of executor
+
+shutdownNow() may interrupt running threads, while shutdown() does not:
+- shutdown() stops accepting new tasks but allows already submitted tasks to finish
+- shutdownNow() attempts to stop all running tasks immediately and returns the list 
+of tasks that were not executed
+
+Question 18 - 
+What is Atomic classes? 
+Are classes that provide thread-safe operations on single variables using atomic (lock-free) 
+operations, typically implemented with CAS (Compare-And-Swap)
+
+How many types of Atomic classes?
+Commonly seen Atomic types:
+AtomicInteger
+AtomicLong
+AtomicBoolean
+
+Give some code example of Atomic classes and its main methods.
+public class AtomicDemo { 
+	private static AtomicInteger atomicInteger = new AtomicInteger(1); 
+	public static void main(String[] args) { 
+		System.out.println(atomicInteger.getAndIncrement());
+		System.out.println(atomicInteger.get());  
+	} 
+}
+
+Methods inlcudes:
+addAndGet(int delta)
+incrementAndGet() 
+getAndSet(int newValue)
+getAndIncrement() 
+
+When to use it?
+- When performing simple operations like counters or accumulators
+- When high performance is needed without lock overhead
+- When updating a single shared variable in a multi-threaded environment
+
+Question 19 - 
+What is the concurrent collections? 
+Concurrent collections are thread-safe data structures provided by Java that allow 
+multiple threads to access and modify data concurrently without external synchronization
+
+Can you list some concurrent data structure (Thread-safe)
+CopyOnWriteArrayList
+ConcurrentHashMap
+CopyOnWriteArraySet
+ArrayBlockingQueue/LinkedBlockingQueue
+LinkedBlockingDeque
+
+Question 20 - What kind of locks do you know? What is the advantage of each lock?
+0) Intrinsic Lock - synchronized
+
+i) ReentrantLock
+- Explicit lock from java.util.concurrent.locks
+- Supports tryLock() and fairness policy
+Advantage: More flexible, supports timeout and interruptible locking
+
+ii) ReadWriteLock
+- Multiple readers allowed, single writer
+Advantage: Improves performance in read-heavy scenarios
+
+iii) StampedLock
+- Supports optimistic read
+- Allows reading without blocking writers
+Advantage: Higher performance with optimistic locking when reads greatly outnumber writes
+
+Question 21 - 
+What is future and completableFuture?
+Future represents the result of an asynchronous computation. It allows checking task status 
+and retrieving the result later, but calling get() blocks the current thread until the result 
+is available
+
+CompletableFuture is an enhanced version of Future introduced in Java 8. It supports 
+asynchronous, non-blocking execution and allows chaining multiple tasks with callbacks
+
+List some main methods of ComplertableFuture.
+
+i) Creating a CompletableFuture
+- CompletableFuture.supplyAsync(Supplier<U> supplier) : 
+Executes the given task asynchronously and returns the result
+- CompletableFuture.runAsync(Runnable runnable) : 
+Executes the given task asynchronously, without returning a value
+
+ii) Result Processing and Transformation
+- CompletableFuture.thenApply(Function<T, U> fn) :
+Processes the return value and transforms it into another type
+- CompletableFuture.thenAccept(Consumer<T> action) : 
+Processes the return value without returning a new CompletableFuture
+- CompletableFuture.thenRun(Runnable action) :
+Ignores the return value and runs a runnable
+
+iii) Combination and Linking
+- CompletableFuture.thenCompose(Function<T, CompletionStage<U>> fn) :
+Links another CompletableFuture and passes the result to the next task 
+- CompletableFuture.thenCombine(CompletionStage<U> other, BiFunction<T, U, V> fn) : 
+Combines the results of two CompletableFutures and returns a new CompletableFuture
+
+iv) Exception Handling 
+- CompletableFuture.exceptionally(Function<Throwable, T> fn) : 
+Handles exceptions and returns an alternative value 
+- CompletableFuture.handle(BiFunction<T, Throwable, U> fn) : 
+Handles exceptions while allowing access to the result value (if any)
+
+
+
+
