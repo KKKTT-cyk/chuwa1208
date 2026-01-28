@@ -191,42 +191,133 @@ public class PostServiceImpl implements PostService {
 
 
 ### Q12\.Explain different types of application context in Spring framework, with screenshots. You may take https://github.com/CTYue/springIOC for reference.
-
+* What is ApplicationContext? 
+* It is basically the main "container" that runs a Spring application. While it includes all the core features of a `BeanFactory`, like creating and wiring objects, it adds several enterprise-level features on top:
+1. Bean Management: It handles the creation and lifecycle of all the objects (beans) in your app.
+2. Configuration Support: It knows how to read your setup instructions, whether you use XML files, Java Annotations, or code.
+3. Event Handling: It lets different components in your app send and listen for events to communicate with each other.
+4. Resource Access: It provides an easy way to load external files and resources, like images or text files.
+5. i18n (Internationalization): It supports multi-language messaging, which is useful for global applications.
 
 ---
 
-
 ### Q13\. Compare @Component and @Bean and in which scenario they should be used.
+* The main difference is where you put them and who wrote the code.
 
+| Feature | `@Component` | `@Bean` |
+| :--- | :--- | :--- |
+| **Location** | **Class Level** (Top of the class) | **Method Level** (Inside a `@Configuration` class) |
+| **How it works** | Spring finds it automatically (Scanning) | You write the logic to create the object |
+| **Best for...** | Code **you wrote** (Your source files) | Code from **3rd Party Libraries** (JARs) |
 
+---
 
+### 1. `@Component`
+**Use this when:** You are writing the class yourself.
+Since you have access to the source code, you can just tag the class. Spring scans your package, finds this tag, and creates an instance for you automatically.
+
+* **Scenario:** You are building a `PaymentService`. You own the file, so you add the annotation directly.
+
+```java
+// You own this code, so you can annotate the class directly
+@Component
+public class PaymentService {
+    public void process() {
+        System.out.println("Payment processed");
+    }
+}
+
+```
+### 2. `@Bean`
+**Use this when:** You need an object from an external library. You cannot open a read-only JAR file, like Jackson library to paste `@Component` on their classes. Instead, you create a "factory method" in your configuration to build the object manually.
+
+* **Scenario:** You need to use `Gson` (a Google library) to parse JSON. You can't edit Google's code, so you use `@Bean` to wrap it.
+
+```java
+@Configuration
+public class AppConfig {
+
+    // You can't touch the Gson class source code, so you create it here
+    @Bean
+    public Gson gson() {
+        return new Gson();
+    }
+}
+```
 ---
 
 
 ### Q14\. Explain Spring bean scopes and how to pick the correct bean scope.
+**What is a Scope?**
+It defines how long a bean lives and how many copies of it Spring creates.
 
+**The Main Scopes:**
 
+1.  **Singleton:**
+    * **Behavior:** Spring creates **one single instance** per application. Everyone shares this same object.
+    * **Use Case:** Best for stateless beans like Services and Repositories. 
+2.  **Prototype:**
+    * **Behavior:** Spring creates a **new instance** every time you ask for it.
+    * **Use Case:** Best for objects that are not thread-safe or need to hold unique state.
+
+**Web-Only Scopes:**
+* **Request:** One instance per HTTP request.
+* **Session:** One instance per user session.
+* **Application:** One instance per web app (similar to Singleton).
+
+**How to Pick:**
+Always start with **Singleton**. Only change it to **Session** or **Request** if you specifically need to store data that is unique to a single user or a single API call (stateful).
 
 ---
 
 
 ### Q15\. Explain the difference between bean id and bean class.
+You could think of it like a standard Java variable declaration: `String myName`.
+* **Bean Class** = The **Data Type** (`String`)
+* **Bean ID** = The **Variable Name** (`myName`)
 
+| Feature | Bean Class | Bean ID |
+| :--- | :--- | :--- |
+| **What is it?** | The blueprint or type (e.g., `DatabaseConfig`). | The unique name for that specific instance (e.g., `db1`). |
+| **Uniqueness** | **Not unique** (You can create many beans from one class). | **Must be unique** (Like a key in a Map). |
 
+**Why it matters:**
+Usually, they match. But if you need **two** copies of the same object, like two different database connections, they will share the same **Class**, but you must give them different **IDs** so Spring can tell them apart.
+
+```java
+// Same Class (Database), Different IDs ("mysql", "postgres")
+
+@Bean("mysql") 
+public Database db1() { return new Database(); } 
+
+@Bean("postgres") 
+public Database db2() { return new Database(); }
+```
 ---
 
 
 ### Q16\. Explain that when a bean has multiple alternative implementations, how will Spring decide which bean implementation to inject/autowire?
 
+**The Problem:**
+By default, Spring tries to Autowire by **Type**. If it finds more than one bean of the same type (e.g., two classes implementing `Animal`), it panics and throws a `NoUniqueBeanDefinitionException`.
 
+**How to fix it (Resolution Strategy):**
 
+1.  **`@Primary` (The Default)**
+    You can mark one implementation with `@Primary`. This tells Spring: "If you aren't sure which one to pick, just use this one."
+
+2.  **`@Qualifier` (The Specific Tag)**
+    This is stronger than `@Primary`. You use it at the injection point (like `@Qualifier("dog")`) to tell Spring exactly which Bean ID you want.
+
+3.  **Variable Name Matching**
+    If you don't use qualifiers, Spring attempts a "smart match." It checks if the **variable name** matches any **Bean ID**.
+    * `@Autowired Animal dog;` -> Injects the bean named "dog".
+
+4.  **`@Profile` & `@Conditional`**
+    Sometimes Spring doesn't even load the conflicting bean.
+    * **`@Profile("dev")`**: This bean only exists if you are in "dev" mode.
+    * **`@Conditional`**: This bean is only created if a custom rule is met.
 ---
 
-
-
-
-
-
----
 
 
