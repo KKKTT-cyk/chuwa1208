@@ -1,0 +1,145 @@
+For all following coding questions, please provide code snippets in your markdown submission file, AND take
+screenshots, AND submit an executable Spring project which contains your code (this project can be a clone of
+Springboot-Redbook, as long as it has your own code.).
+1. Add newly learned annotations to your previous cheatsheet, add explainations for these annotations.
+A: 
+@Component: Register the class as a Bean
+@Autowired: inject other bean in this feild
+
+
+2. Walkthrough sample codes under https://github.com/CTYue/springboot-redbook/commits/06_mapper-exception, 
+you are supposed to bring up the application on your local.
+3. Explain why do we need model mappers in Spring, and in what scanrios we need it.
+A: In the repo redbook project, we have Post, Comment as Entities.
+With the help of ModelMapper, it is very clean and quick to map Post with PostDto like this code:
+PostDto postDto = modelMapper.map(post, PostDto.class);
+
+
+4. Provide 3 examples in which model mapper will NOT map succesfully, explain why.
+A: 1. When property names are different, ModelMapper will fail.
+2. If Entity and DTO have different type of variable, it will fail.
+3. If Entity is using a collection such as Map, Set, but DTO is using an object, it will fail.
+
+
+
+5. Explain how model mapper cast different data types between source object and target class.
+A: 1. Auto convert. Primitive and Wrapper types can be auto converted.
+2. If it is int, Date it can be converted to String
+3. If it is a collection like List, it can be converted to Set.
+
+
+6. Add your own API exceptions so that when something wrong happens in service layer, your rest API will
+return your customized response and status code.
+A: See ValidationException.java
+
+
+7. Explain how Controller Advices work, is there any other approach to do same/similar global API exception handling?
+@ControllerAdvice is a Spring annotation that enbales global exception handling across all controllers.
+It follows this logic order:  Exception Thrown → Spring DispatcherServlet → @ControllerAdvice Handler → Response
+Alternatively, we can use: 
+@ResponseStatus — Annotate exception classes directly
+@ExceptionHandler in Controllers — Controller-specific handling.
+
+
+
+8. What's the difference between throwing a regular exception and a customized API exception that will be
+eventually thrown to Controller Advice codes? Please provide screenshots to explain your findings.
+A:
+In PostServiceImpl.java
+Using Regular Exception:
+@Override
+public PostDto getPostById(long id) {
+    Post post = postRepository.findById(id).orElse(null);
+    
+    if (post == null) {
+        // Regular exception - no HTTP status info
+        throw new RuntimeException("Post not found with id: " + id);
+    }
+    
+    return modelMapper.map(post, PostDto.class);
+}
+Using Custom API:
+@Override
+public PostDto getPostById(long id) {
+    // Custom exception with HTTP status info
+    Post post = postRepository.findById(id)
+        .orElseThrow(() -> new ResourceNotFoundException("Post", "id", id));
+    
+    return modelMapper.map(post, PostDto.class);
+}
+
+9. Write some regular expression to restrict the value of attributes that your Post or Comment can have. You
+may use https://regex101.com/ to construct and test/validate your regular expression.
+See Regex.png
+
+
+10. Explain Spring framework fundamental principles. And how can they help build business applications?
+The core principles are:
+1. Inversion of Control (IoC)
+2. Dependency Injection (DI)
+3. Aspect-Oriented Programming (AOP)
+4. Loose Coupling
+5. Abstraction over Infrastructure
+6. Convention over Configuration
+7. POJO-based Development
+
+11. Explain different types of dependency injection, explain their suitable use cases, and why fielde injection
+is not recommended in general. Please provide necessary code snippets and screenshots if possible.
+Spring has three different types of dependency injection:
+1. Constructor Injection
+2. Setter Injection
+3. Field Injection
+
+In PostController.java, there is a:
+@Autowired
+private PostService postService;
+
+This annotation is used as Field Injection. This is not recommended because:
+1. Its hard to test, it requires Spring context or mock data.
+2. Its not visible in constructor.
+
+Instead, we can try use:
+@Autowired
+public void setPostService(PostService postService) {
+    this.postService = postService;
+}
+
+This is the way of Setter Injection, where dependencies are injected thru setter.
+
+And lastly, we can even use:
+// Constructor Injection - Spring automatically injects
+public PostController(PostService postService) {
+    this.postService = postService;
+}
+This is recommended because:
+1. Easy to create object in unit test.
+2. Dependencies are guaranteed to be set.
+
+12. Explain different types of application context in Spring framework, with screenshots. 
+You may take https://github.com/CTYue/springIOC for reference.
+ApplicationContext is the central interface in Spring Framework that provides:
+- Bean Factory: Creates and manages beans
+- Configuration Metadata: Reads configuration (XML, annotations, Java config)
+- Event Publishing: Publishes application events
+- Resource Loading: Loads resources (files, URLs)
+- Internationalization: Message resolution
+
+
+13. Compare @Component and @Bean and in which scenario they should be used.
+@Component is used for Spring auto detect and manage a class.
+@Bean is to define a class is a bean
+
+14. Explain Spring bean scopes and how to pick the correct bean scope.
+A bean scopes is how many instances of a bean Spring created and how long they alive.
+If its Singleton, it only has one bean.
+If its Prototype, it new a instance every time when its requested.
+
+15. Explain the difference between bean id and bean class.
+Bean Id is the name of the bean
+Bean class is the type of the bean.
+
+
+16. Explain that when a bean has multiple alternative implementations, how will Spring decide which bean
+implementation to inject/autowire?
+A: When multiple beans implement the same interface, Spring first try type-based autowiring.
+If multiple candidates exist, it fails unless one bean is marked with @Primary or @Qualifier
