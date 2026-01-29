@@ -583,7 +583,9 @@ public class UserServlet extends HttpServlet {
 - **Production Web Apps**: Tomcat, Undertow
 - **Embedded Applications**: Jetty, Undertow
 
-## 8. screenshot
+---
+
+## 8. Screenshot
 
 <img width="1692" height="1306" alt="image" src="https://github.com/user-attachments/assets/e893a8d3-dffb-49e7-97e7-78a664486f61" />
 
