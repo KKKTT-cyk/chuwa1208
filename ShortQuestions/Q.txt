@@ -1,0 +1,60 @@
+1. List all of the annotations you learned from this class session.
+@Component
+@Service
+@Repository
+@Controller
+@RestController
+@Autowired
+@Qualifier
+@Primary
+@Configuration 
+@Bean 
+@ComponentScan 
+@RequestMapping 
+@GetMapping 
+@PostMapping 
+@PutMapping 
+@DeleteMapping 
+@SpringBootApplication 
+@Entity 
+@Table 
+@Id 
+@GeneatedValue 
+@Column 
+@OneToOne 
+@OneToMany 
+@ManyToOne 
+@ManyToMany 
+@JoinColumn 
+@Transactional 
+@Async 
+
+
+
+2. Explain tight coupling vs loose coupling and what does Spring IOC do?
+Tight Coupling: A class has a concret implementation of another class.
+Loose Coupling: A class depends on an abstraction such as Interface.
+Spring IOC: Inversion of Control, it's Bean Factory that manage the program lifecycle and dependency injection.
+
+
+3. What is MVC pattern?
+Model: Data object that can be used in database
+View: Front-end, user can see it.
+Controller: API methods.
+
+4. What is Front-Controller?
+A design pattern where a single central controller handles all incoming requests and delegates them to appropriate handlers.
+
+5. Explain DispatcherServlet and how it works.
+DispatcherServlet is the Front Controller of Spring MVC.
+It receives all incoming HTTP requests, corrdinates the entire request-response workflow, and delegates work to the right components.
+
+6. What is JSP and What is Model And View？
+JSP: JavaServer Pages. It used for displaying front-end page and can recieve the data from back-end.
+
+
+7. Explain servlet and servlet container , name some servlet implementations and servlet containers
+other than tomcat
+Servlet is a Java class that runs on a web server and handles HTTP requests and response.
+For example:
+Jetty, Undertow, GlassFish, and Tomcat (most popular)
