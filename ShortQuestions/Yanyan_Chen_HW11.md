@@ -1,4 +1,4 @@
-## 1. Tight Coupling vs Loose Coupling and Spring IOC
+## 2. Tight Coupling vs Loose Coupling and Spring IOC
 
 ### Tight Coupling
 Tight coupling occurs when classes are highly dependent on each other's concrete implementations. Changes in one class often require changes in dependent classes.
@@ -79,7 +79,7 @@ public class MySQLUserRepository implements UserRepository {
 
 ---
 
-## 2. MVC Pattern
+## 3. MVC Pattern
 
 ### What is MVC?
 
@@ -147,7 +147,7 @@ public class UserController {
 
 ---
 
-## 3. Front Controller Pattern
+## 4. Front Controller Pattern
 
 ### What is Front Controller?
 
@@ -194,7 +194,7 @@ public class FrontController {
 
 ---
 
-## 4. DispatcherServlet and How It Works
+## 5. DispatcherServlet and How It Works
 
 ### What is DispatcherServlet?
 
@@ -297,7 +297,7 @@ public class WebAppInitializer implements WebApplicationInitializer {
 
 ---
 
-## 5. JSP and ModelAndView
+## 6. JSP and ModelAndView
 
 ### What is JSP?
 
@@ -408,7 +408,7 @@ public String listUsers(Model model) {
 
 ---
 
-## 6. Servlet and Servlet Container
+## 7. Servlet and Servlet Container
 
 ### What is a Servlet?
 
@@ -582,4 +582,8 @@ public class UserServlet extends HttpServlet {
 - **Enterprise Java EE**: WildFly, GlassFish, WebLogic
 - **Production Web Apps**: Tomcat, Undertow
 - **Embedded Applications**: Jetty, Undertow
+
+## 8. screenshot
+
+<img width="1692" height="1306" alt="image" src="https://github.com/user-attachments/assets/e893a8d3-dffb-49e7-97e7-78a664486f61" />
 
